@@ -679,9 +679,35 @@
         .carousel-indicators .indicator.active { background: #8b5cf6; box-shadow: 0 0 10px #8b5cf6; }
         .is-far-prev { transform: scale(0.75) rotateY(45deg) translateX(-80px) translateZ(-150px) !important; opacity: 0.45 !important; filter: saturate(0.6) brightness(0.7) !important; }
         .is-far-next { transform: scale(0.75) rotateY(-45deg) translateX(80px) translateZ(-150px) !important; opacity: 0.45 !important; filter: saturate(0.6) brightness(0.7) !important; }
+        /* Preloader styles */
+        #preloader {
+          position: fixed;
+          inset: 0;
+          background: #fff;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: opacity 0.6s cubic-bezier(0.4,0,0.2,1);
+        }
+        #preloader img {
+          width: 120px;
+          height: auto;
+          animation: preloader-bounce 1.2s infinite alternate;
+        }
+        @keyframes preloader-bounce {
+          0% { transform: scale(1) translateY(0); }
+          100% { transform: scale(1.08) translateY(-10px); }
+        }
+        #preloader.preloader-hide {
+          opacity: 0;
+          pointer-events: none;
+        }
     </style>
+    <link rel="icon" type="image/jpeg" href="logo-box.jpg">
 </head>
 <body class="font-body bg-secondary text-gray-800">
+    <div id="preloader"><img src="logo-box.jpg" alt="Tinu Homes Preloader Logo"></div>
     <!-- Navigation -->
     <nav class="fixed w-full z-50 navbar-glass">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1655,6 +1681,14 @@
             tipContents.forEach((content, i) => {
                 console.log(`Tip ${i} image:`, content.querySelector('img').src);
             });
+        });
+
+        window.addEventListener('load', function() {
+          const preloader = document.getElementById('preloader');
+          if (preloader) {
+            preloader.classList.add('preloader-hide');
+            setTimeout(() => { preloader.style.display = 'none'; }, 700);
+          }
         });
     </script>
 </body>
